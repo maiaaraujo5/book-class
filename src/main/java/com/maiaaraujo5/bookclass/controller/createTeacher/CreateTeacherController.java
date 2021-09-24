@@ -3,7 +3,7 @@ package com.maiaaraujo5.bookclass.controller.createTeacher;
 import com.maiaaraujo5.bookclass.controller.createTeacher.domain.CreateTeacherRequest;
 import com.maiaaraujo5.bookclass.controller.createTeacher.domain.CreateTeacherResponse;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
-import com.maiaaraujo5.bookclass.service.createTeacher.CreateTeacher;
+import com.maiaaraujo5.bookclass.service.createTeacher.CreateTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,11 +13,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/v1/teacher")
 public class CreateTeacherController {
 
-    private final CreateTeacher createTeacher;
+    private final CreateTeacherService createTeacherService;
 
     @Autowired
-    public CreateTeacherController(CreateTeacher createTeacher) {
-        this.createTeacher = createTeacher;
+    public CreateTeacherController(CreateTeacherService createTeacherService) {
+        this.createTeacherService = createTeacherService;
     }
 
     @PostMapping
@@ -26,7 +26,7 @@ public class CreateTeacherController {
                 createTeacherRequest.getLastname(),
                 createTeacherRequest.getEmail());
 
-        Teacher teacher = this.createTeacher.Execute(teacherRequest);
+        Teacher teacher = this.createTeacherService.Execute(teacherRequest);
 
         CreateTeacherResponse createTeacherResponse = new CreateTeacherResponse(teacher);
 

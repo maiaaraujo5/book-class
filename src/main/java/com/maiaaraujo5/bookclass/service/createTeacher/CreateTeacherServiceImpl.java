@@ -6,27 +6,28 @@ import com.maiaaraujo5.bookclass.repository.teacher.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class CreateTeacherImpl implements CreateTeacher {
+public class CreateTeacherServiceImpl implements CreateTeacherService {
 
     private final TeacherRepository teacherRepository;
 
     @Autowired
-    public CreateTeacherImpl(TeacherRepository teacherRepository) {
+    public CreateTeacherServiceImpl(TeacherRepository teacherRepository) {
         this.teacherRepository = teacherRepository;
     }
 
     @Override
     public Teacher Execute(Teacher teacher) {
-        Teacher found = this.teacherRepository.FindByEmail(teacher.getEmail());
-        if (found != null) {
+        Optional<Teacher> found = this.teacherRepository.FindByEmail(teacher.getEmail());
+        if (found.isPresent()) {
             throw new TeacherAlreadyExists("This teacher already exists");
         }
 
         teacher.setId(UUID.randomUUID().toString());
-        this.teacherRepository.Create(teacher);
+        this.teacherRepository.Save(teacher);
 
         return teacher;
     }

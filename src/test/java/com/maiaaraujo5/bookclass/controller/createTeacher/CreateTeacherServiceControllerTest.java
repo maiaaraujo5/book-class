@@ -2,7 +2,7 @@ package com.maiaaraujo5.bookclass.controller.createTeacher;
 
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.exception.TeacherAlreadyExists;
-import com.maiaaraujo5.bookclass.service.createTeacher.CreateTeacher;
+import com.maiaaraujo5.bookclass.service.createTeacher.CreateTeacherService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +22,18 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(CreateTeacherController.class)
-class CreateTeacherControllerTest {
+class CreateTeacherServiceControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     @MockBean
-    private CreateTeacher createTeacher;
+    private CreateTeacherService createTeacherService;
 
     @Test
     void should_successfully_create_a_teacher_and_response_status_created() throws Exception {
         Teacher teacher = new Teacher("123","John", "Doe", "johndoe@johndoe.com");
-        given(createTeacher.Execute(any())).willReturn(teacher);
+        given(createTeacherService.Execute(any())).willReturn(teacher);
 
         mockMvc.perform(post("/v1/teacher")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -47,7 +47,7 @@ class CreateTeacherControllerTest {
 
     @Test
     void should_return_status_conflict_when_service_throws_teacher_already_exists() throws Exception {
-        given(createTeacher.Execute(any())).willThrow(new TeacherAlreadyExists("This teacher already exists"));
+        given(createTeacherService.Execute(any())).willThrow(new TeacherAlreadyExists("This teacher already exists"));
         mockMvc.perform(post("/v1/teacher")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"johndoe@johndoe.com\"}"))
