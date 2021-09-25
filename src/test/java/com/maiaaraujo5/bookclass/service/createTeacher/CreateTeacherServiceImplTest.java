@@ -34,7 +34,7 @@ class CreateTeacherServiceImplTest {
         Teacher input = new Teacher("", "", "", "");
         when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.empty());
 
-        Teacher teacher = createTeacher.Execute(input);
+        Teacher teacher = createTeacher.execute(input);
 
         verify(teacherRepository, Mockito.times(1)).Save(any());
         assertThat(teacher, notNullValue());
@@ -47,7 +47,7 @@ class CreateTeacherServiceImplTest {
                 () -> {
                     when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.of(new Teacher()));
                     Teacher input = new Teacher("", "", "", "");
-                    createTeacher.Execute(input);
+                    createTeacher.execute(input);
                 }
         );
 

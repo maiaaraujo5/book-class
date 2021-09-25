@@ -1,7 +1,7 @@
 package com.maiaaraujo5.bookclass.controller.createTeacher;
 
 import com.maiaaraujo5.bookclass.controller.createTeacher.domain.CreateTeacherRequest;
-import com.maiaaraujo5.bookclass.controller.createTeacher.domain.CreateTeacherResponse;
+import com.maiaaraujo5.bookclass.controller.shared.TeacherResponse;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.service.createTeacher.CreateTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,14 +21,14 @@ public class CreateTeacherController {
     }
 
     @PostMapping
-    public ResponseEntity<CreateTeacherResponse> createTeacher(@RequestBody CreateTeacherRequest createTeacherRequest) {
+    public ResponseEntity<TeacherResponse> createTeacher(@RequestBody CreateTeacherRequest createTeacherRequest) {
         Teacher teacherRequest = new Teacher(createTeacherRequest.getName(),
                 createTeacherRequest.getLastname(),
                 createTeacherRequest.getEmail());
 
-        Teacher teacher = this.createTeacherService.Execute(teacherRequest);
+        Teacher teacher = this.createTeacherService.execute(teacherRequest);
 
-        CreateTeacherResponse createTeacherResponse = new CreateTeacherResponse(teacher);
+        TeacherResponse createTeacherResponse = new TeacherResponse(teacher);
 
         return new ResponseEntity<>(createTeacherResponse, HttpStatus.CREATED);
     }

@@ -20,7 +20,7 @@ public class CreateTeacherServiceImpl implements CreateTeacherService {
     }
 
     @Override
-    public Teacher Execute(Teacher teacher) {
+    public Teacher execute(Teacher teacher) {
         Optional<Teacher> found = this.teacherRepository.FindByEmail(teacher.getEmail());
         if (found.isPresent()) {
             throw new TeacherAlreadyExists("This teacher already exists");

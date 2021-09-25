@@ -1,11 +1,11 @@
-package com.maiaaraujo5.bookclass.controller.createTeacher.domain;
+package com.maiaaraujo5.bookclass.controller.shared;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import lombok.Getter;
 
 @Getter
-public class CreateTeacherResponse {
+public class TeacherResponse {
     @JsonProperty
     private final String id;
     @JsonProperty
@@ -15,11 +15,10 @@ public class CreateTeacherResponse {
     @JsonProperty
     private final String email;
 
-    public CreateTeacherResponse(Teacher teacher) {
+    public TeacherResponse(Teacher teacher) {
         this.id = teacher.getId();
         this.name = teacher.getName();
         this.lastname = teacher.getLastname();
         this.email = teacher.getEmail();
     }
 }
-

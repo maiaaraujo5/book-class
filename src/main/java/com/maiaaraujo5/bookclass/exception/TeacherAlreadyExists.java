@@ -2,11 +2,10 @@ package com.maiaaraujo5.bookclass.exception;
 
 import lombok.Getter;
 
-@Getter
-public class TeacherAlreadyExists extends RuntimeException {
-    private final String message;
+
+public class TeacherAlreadyExists extends Exception {
 
     public TeacherAlreadyExists(String message) {
-        this.message = message;
+        super(message);
     }
 }

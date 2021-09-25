@@ -33,7 +33,7 @@ class CreateTeacherServiceControllerTest {
     @Test
     void should_successfully_create_a_teacher_and_response_status_created() throws Exception {
         Teacher teacher = new Teacher("123","John", "Doe", "johndoe@johndoe.com");
-        given(createTeacherService.Execute(any())).willReturn(teacher);
+        given(createTeacherService.execute(any())).willReturn(teacher);
 
         mockMvc.perform(post("/v1/teacher")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -47,7 +47,7 @@ class CreateTeacherServiceControllerTest {
 
     @Test
     void should_return_status_conflict_when_service_throws_teacher_already_exists() throws Exception {
-        given(createTeacherService.Execute(any())).willThrow(new TeacherAlreadyExists("This teacher already exists"));
+        given(createTeacherService.execute(any())).willThrow(new TeacherAlreadyExists("This teacher already exists"));
         mockMvc.perform(post("/v1/teacher")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"johndoe@johndoe.com\"}"))
