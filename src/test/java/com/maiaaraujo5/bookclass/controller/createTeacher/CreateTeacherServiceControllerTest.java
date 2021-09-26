@@ -1,6 +1,7 @@
 package com.maiaaraujo5.bookclass.controller.createTeacher;
 
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
+import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherAlreadyExists;
 import com.maiaaraujo5.bookclass.service.createTeacher.CreateTeacherService;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+
+import java.time.LocalDateTime;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,12 +35,12 @@ class CreateTeacherServiceControllerTest {
 
     @Test
     void should_successfully_create_a_teacher_and_response_status_created() throws Exception {
-        Teacher teacher = new Teacher("123","John", "Doe", "johndoe@johndoe.com");
+        Teacher teacher = new Teacher("123","John", "Doe", "johndoe@johndoe.com", new WorkTime(8, 17), LocalDateTime.now());
         given(createTeacherService.execute(any())).willReturn(teacher);
 
         mockMvc.perform(post("/v1/teacher")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"johndoe@johndoe.com\"}"))
+                .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john.doe@johndoe.com\",\"work_time\":{\"start_at\":8,\"end_at\":17}}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is("123")))
                 .andExpect(jsonPath("$.name", is("John")))
@@ -50,7 +53,7 @@ class CreateTeacherServiceControllerTest {
         given(createTeacherService.execute(any())).willThrow(new TeacherAlreadyExists("This teacher already exists"));
         mockMvc.perform(post("/v1/teacher")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"johndoe@johndoe.com\"}"))
+                .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john.doe@johndoe.com\",\"work_time\":{\"start_at\":8,\"end_at\":17}}"))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.status", is(HttpStatus.CONFLICT.name())))
                 .andExpect(jsonPath("$.message", is("This teacher already exists")));

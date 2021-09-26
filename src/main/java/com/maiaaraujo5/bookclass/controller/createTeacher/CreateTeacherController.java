@@ -3,6 +3,7 @@ package com.maiaaraujo5.bookclass.controller.createTeacher;
 import com.maiaaraujo5.bookclass.controller.createTeacher.domain.CreateTeacherRequest;
 import com.maiaaraujo5.bookclass.controller.shared.TeacherResponse;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
+import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.service.createTeacher.CreateTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,7 +25,8 @@ public class CreateTeacherController {
     public ResponseEntity<TeacherResponse> createTeacher(@RequestBody CreateTeacherRequest createTeacherRequest) {
         Teacher teacherRequest = new Teacher(createTeacherRequest.getName(),
                 createTeacherRequest.getLastname(),
-                createTeacherRequest.getEmail());
+                createTeacherRequest.getEmail(),
+                new WorkTime(createTeacherRequest.getWorkTime().getStartAt(), createTeacherRequest.getWorkTime().getEndAt()));
 
         Teacher teacher = this.createTeacherService.execute(teacherRequest);
 

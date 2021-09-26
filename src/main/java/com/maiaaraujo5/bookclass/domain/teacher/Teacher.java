@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -14,10 +16,13 @@ public class Teacher {
     private String name;
     private String lastname;
     private String email;
+    private WorkTime workTime;
+    private LocalDateTime createdAt;
 
-    public Teacher(String name, String lastname, String email) {
+    public Teacher(String name, String lastname, String email, WorkTime workTime) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
+        this.workTime = workTime;
     }
 }

@@ -14,11 +14,14 @@ public class TeacherResponse {
     private final String lastname;
     @JsonProperty
     private final String email;
+    @JsonProperty("work_time")
+    private final WorkTime workTime;
 
     public TeacherResponse(Teacher teacher) {
         this.id = teacher.getId();
         this.name = teacher.getName();
         this.lastname = teacher.getLastname();
         this.email = teacher.getEmail();
+        this.workTime = new WorkTime(teacher.getWorkTime().getStartAt(), teacher.getWorkTime().getEndAt());
     }
 }

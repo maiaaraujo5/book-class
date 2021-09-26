@@ -6,6 +6,8 @@ import com.maiaaraujo5.bookclass.repository.teacher.TeacherRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.util.GregorianCalendar;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,8 +27,9 @@ public class CreateTeacherServiceImpl implements CreateTeacherService {
         if (found.isPresent()) {
             throw new TeacherAlreadyExists("This teacher already exists");
         }
-
+        
         teacher.setId(UUID.randomUUID().toString());
+        teacher.setCreatedAt(LocalDateTime.now());
         this.teacherRepository.Save(teacher);
 
         return teacher;

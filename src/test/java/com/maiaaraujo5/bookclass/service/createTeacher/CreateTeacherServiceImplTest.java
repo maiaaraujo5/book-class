@@ -1,6 +1,7 @@
 package com.maiaaraujo5.bookclass.service.createTeacher;
 
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
+import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherAlreadyExists;
 import com.maiaaraujo5.bookclass.repository.teacher.TeacherRepository;
 import org.junit.jupiter.api.Test;
@@ -10,6 +11,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -31,7 +33,7 @@ class CreateTeacherServiceImplTest {
 
     @Test
     void should_create_teacher_successfully() {
-        Teacher input = new Teacher("", "", "", "");
+        Teacher input = new Teacher("", "", "", "", new WorkTime(8, 17), LocalDateTime.now());
         when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.empty());
 
         Teacher teacher = createTeacher.execute(input);
@@ -46,7 +48,7 @@ class CreateTeacherServiceImplTest {
                 TeacherAlreadyExists.class,
                 () -> {
                     when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.of(new Teacher()));
-                    Teacher input = new Teacher("", "", "", "");
+                    Teacher input = new Teacher("", "", "", "", new WorkTime(8, 17), LocalDateTime.now());
                     createTeacher.execute(input);
                 }
         );
