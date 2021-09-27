@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -14,4 +15,9 @@ public class Appointment {
     private String teacherId;
     private LocalDateTime time;
     private LocalDateTime createdAt;
+
+    public Appointment(String teacherId, LocalDateTime time) {
+        this.teacherId = teacherId;
+        this.time = time;
+    }
 }

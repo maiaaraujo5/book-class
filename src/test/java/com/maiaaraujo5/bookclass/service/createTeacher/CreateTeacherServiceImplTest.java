@@ -43,7 +43,7 @@ class CreateTeacherServiceImplTest {
     }
 
     @Test
-    void should_trow_exception_when_user_already_exist_in_repository() {
+    void should_throw_exception_when_user_already_exist_in_repository() {
         TeacherAlreadyExists thrown = assertThrows(
                 TeacherAlreadyExists.class,
                 () -> {
