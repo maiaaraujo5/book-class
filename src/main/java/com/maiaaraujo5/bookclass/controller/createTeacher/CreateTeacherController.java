@@ -3,6 +3,7 @@ package com.maiaaraujo5.bookclass.controller.createTeacher;
 import com.maiaaraujo5.bookclass.controller.createTeacher.domain.CreateTeacherRequest;
 import com.maiaaraujo5.bookclass.controller.shared.TeacherResponse;
 import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
+import com.maiaaraujo5.bookclass.domain.teacher.Subject;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.service.createTeacher.CreateTeacherService;
@@ -32,7 +33,8 @@ public class CreateTeacherController {
         Teacher teacherRequest = new Teacher(createTeacherRequest.getName(),
                 createTeacherRequest.getLastname(),
                 createTeacherRequest.getEmail(),
-                convertWorkTimeToDomain(createTeacherRequest.getWorkTimeList())
+                convertWorkTimeToDomain(createTeacherRequest.getWorkTimeList()),
+                convertSubjectToDomain(createTeacherRequest.getSubjectList())
         );
 
         Teacher teacher = this.createTeacherService.execute(teacherRequest);
@@ -59,5 +61,17 @@ public class CreateTeacherController {
         });
 
         return list;
+    }
+
+    private List<Subject> convertSubjectToDomain(List<com.maiaaraujo5.bookclass.controller.shared.Subject> subjectList) {
+
+        if (CollectionUtils.isEmpty(subjectList)) {
+            return new ArrayList<>();
+        }
+
+
+        return subjectList.stream()
+                .map(subject -> new Subject(subject.getName(), subject.getTags()))
+                .collect(Collectors.toList());
     }
 }

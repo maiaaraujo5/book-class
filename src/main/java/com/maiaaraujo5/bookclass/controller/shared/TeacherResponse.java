@@ -20,6 +20,8 @@ public class TeacherResponse {
     private final String email;
     @JsonProperty("workTime")
     private final List<WorkTime> workTimeList;
+    @JsonProperty("subjects")
+    private final List<Subject> subjectList;
 
     public TeacherResponse(Teacher teacher) {
         this.id = teacher.getId();
@@ -27,6 +29,9 @@ public class TeacherResponse {
         this.lastname = teacher.getLastname();
         this.email = teacher.getEmail();
         this.workTimeList = convertWorkTimeList(teacher.getWorkTimeList());
+        this.subjectList  = teacher.getSubjectList().stream()
+                .map(subject -> new Subject(subject.getName(), subject.getTags()))
+                .collect(Collectors.toList());
     }
 
     private List<WorkTime> convertWorkTimeList(List<com.maiaaraujo5.bookclass.domain.teacher.WorkTime> workTimeList) {

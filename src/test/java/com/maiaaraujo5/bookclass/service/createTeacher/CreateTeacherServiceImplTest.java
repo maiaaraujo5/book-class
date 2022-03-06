@@ -1,6 +1,7 @@
 package com.maiaaraujo5.bookclass.service.createTeacher;
 
 import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
+import com.maiaaraujo5.bookclass.domain.teacher.Subject;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherAlreadyExists;
@@ -20,8 +21,7 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -38,8 +38,9 @@ class CreateTeacherServiceImplTest {
     void should_create_teacher_successfully() {
         List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
         List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
+        List<Subject> subjectList = Collections.singletonList(new Subject("English", Collections.singletonList("tag")));
 
-        Teacher input = new Teacher("", "", "", "", workTimeList, LocalDateTime.now());
+        Teacher input = new Teacher("", "", "", "", workTimeList, subjectList, LocalDateTime.now());
         when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.empty());
 
         Teacher teacher = createTeacher.execute(input);
@@ -52,13 +53,13 @@ class CreateTeacherServiceImplTest {
     void should_trow_exception_when_user_already_exist_in_repository() {
         List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
         List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
-
+        List<Subject> subjectList = Collections.singletonList(new Subject("English", Collections.singletonList("tag")));
 
         TeacherAlreadyExists thrown = assertThrows(
                 TeacherAlreadyExists.class,
                 () -> {
                     when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.of(new Teacher()));
-                    Teacher input = new Teacher("", "", "", "", workTimeList, LocalDateTime.now());
+                    Teacher input = new Teacher("", "", "", "", workTimeList, subjectList,LocalDateTime.now());
                     createTeacher.execute(input);
                 }
         );

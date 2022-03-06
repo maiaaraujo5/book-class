@@ -1,6 +1,7 @@
 package com.maiaaraujo5.bookclass.service.findTeacher;
 
 import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
+import com.maiaaraujo5.bookclass.domain.teacher.Subject;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherNotFound;
@@ -38,8 +39,9 @@ class FindTeacherServiceImplTest {
 
         List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
         List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
+        List<Subject> subjectList = Collections.singletonList(new Subject("English", Collections.singletonList("tag")));
 
-        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, LocalDateTime.now());
+        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, subjectList, LocalDateTime.now());
         when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.of(teacher));
 
         Teacher teacher1 = findTeacherService.execute(anyString());

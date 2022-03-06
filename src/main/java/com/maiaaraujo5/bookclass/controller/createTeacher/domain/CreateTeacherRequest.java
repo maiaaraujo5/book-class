@@ -1,6 +1,7 @@
 package com.maiaaraujo5.bookclass.controller.createTeacher.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.maiaaraujo5.bookclass.controller.shared.Subject;
 import com.maiaaraujo5.bookclass.controller.shared.WorkTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,4 +19,6 @@ public class CreateTeacherRequest {
     private final String email;
     @JsonProperty("workTime")
     private final List<WorkTime> workTimeList;
+    @JsonProperty("subjects")
+    private final List<Subject> subjectList;
 }

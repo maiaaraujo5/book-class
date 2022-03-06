@@ -1,6 +1,7 @@
 package com.maiaaraujo5.bookclass.controller.createTeacher;
 
 import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
+import com.maiaaraujo5.bookclass.domain.teacher.Subject;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherAlreadyExists;
@@ -22,7 +23,7 @@ import java.util.List;
 
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -42,9 +43,10 @@ class CreateTeacherServiceControllerTest {
     void should_successfully_create_a_teacher_and_response_status_created() throws Exception {
         List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
         List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
+        List<Subject> subjectList = Collections.singletonList(new Subject("English", Collections.singletonList("tag")));
 
 
-        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, LocalDateTime.now());
+        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, subjectList, LocalDateTime.now());
         given(createTeacherService.execute(any())).willReturn(teacher);
 
         mockMvc.perform(post("/v1/teacher")

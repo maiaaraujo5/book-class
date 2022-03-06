@@ -18,12 +18,14 @@ public class Teacher {
     private String lastname;
     private String email;
     private List<WorkTime> workTimeList;
+    private List<Subject> subjectList;
     private LocalDateTime createdAt;
 
-    public Teacher(String name, String lastname, String email, List<WorkTime> workTimeList) {
+    public Teacher(String name, String lastname, String email, List<WorkTime> workTimeList, List<Subject> subjectList) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
         this.workTimeList = workTimeList;
+        this.subjectList = subjectList;
     }
 }

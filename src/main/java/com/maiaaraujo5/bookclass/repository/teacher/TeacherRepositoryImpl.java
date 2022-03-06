@@ -1,6 +1,7 @@
 package com.maiaaraujo5.bookclass.repository.teacher;
 
 import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
+import com.maiaaraujo5.bookclass.domain.teacher.Subject;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.repository.teacher.model.TeacherDocument;
@@ -43,6 +44,9 @@ public class TeacherRepositoryImpl implements TeacherRepository {
                 teacherDocument.get().getLastname(),
                 teacherDocument.get().getEmail(),
                 convertWorkTimeDomain(teacherDocument.get().getWorkTime()),
+                teacherDocument.get().getSubjectDocumentList().stream()
+                        .map(subject -> new Subject(subject.getName(), subject.getTags()))
+                        .collect(Collectors.toList()),
                 teacherDocument.get().getCreatedAt());
 
         return Optional.of(teacher);

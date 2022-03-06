@@ -8,6 +8,7 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,6 +28,8 @@ public class TeacherDocument {
     private String email;
 
     private List<WorkTimeDocument> workTime;
+    @Field("subjects")
+    private List<SubjectDocument> subjectDocumentList;
     private LocalDateTime createdAt;
 
     public TeacherDocument(Teacher teacher) {
@@ -35,6 +38,9 @@ public class TeacherDocument {
         this.lastname = teacher.getLastname();
         this.email = teacher.getEmail();
         this.workTime = convertWorkTimeList(teacher.getWorkTimeList());
+        this.subjectDocumentList = teacher.getSubjectList().stream()
+                .map(subject -> new SubjectDocument(subject.getName(), subject.getTags()))
+                .collect(Collectors.toList());
     }
 
     private List<WorkTimeDocument> convertWorkTimeList(List<WorkTime> workTimeList) {

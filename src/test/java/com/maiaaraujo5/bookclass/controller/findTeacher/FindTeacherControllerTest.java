@@ -1,6 +1,7 @@
 package com.maiaaraujo5.bookclass.controller.findTeacher;
 
 import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
+import com.maiaaraujo5.bookclass.domain.teacher.Subject;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherNotFound;
@@ -19,7 +20,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -39,8 +40,9 @@ class FindTeacherControllerTest {
     void should_successfully_find_a_teacher_and_response_status_created() throws Exception {
         List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
         List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
+        List<Subject> subjectList = Collections.singletonList(new Subject("English", Collections.singletonList("tag")));
 
-        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, LocalDateTime.now());
+        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, subjectList,LocalDateTime.now());
         given(findTeacherService.execute(anyString())).willReturn(teacher);
 
         mockMvc.perform(get("/v1/teacher")

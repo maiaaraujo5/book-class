@@ -1,6 +1,5 @@
 package com.maiaaraujo5.bookclass.controller.shared;
 
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,11 +9,10 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class WorkTime {
+public class Subject {
 
     @JsonProperty
-    private final String weekday;
-
-    @JsonProperty("schedules")
-    private final List<Schedule> scheduleList;
+    private final String name;
+    @JsonProperty
+    private final List<String> tags;
 }

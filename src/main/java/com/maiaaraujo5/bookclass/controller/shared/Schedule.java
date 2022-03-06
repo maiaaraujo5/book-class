@@ -9,11 +9,10 @@ import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @AllArgsConstructor
 public class Schedule {
     @JsonProperty("startHour")
-    int startHour;
+    private final int startHour;
     @JsonProperty("endHour")
-    int endHour;
+    private final int endHour;
 }
