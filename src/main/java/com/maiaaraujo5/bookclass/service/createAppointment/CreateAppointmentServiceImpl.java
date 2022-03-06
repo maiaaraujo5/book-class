@@ -4,14 +4,16 @@ import com.maiaaraujo5.bookclass.domain.appointment.Appointment;
 import com.maiaaraujo5.bookclass.exception.AppointmentAlreadyExists;
 import com.maiaaraujo5.bookclass.repository.appointment.AppointmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
+@Service
 public class CreateAppointmentServiceImpl implements CreateAppointmentService {
 
-    private AppointmentRepository appointmentRepository;
+    private final AppointmentRepository appointmentRepository;
 
     @Autowired
     public CreateAppointmentServiceImpl(AppointmentRepository appointmentRepository) {

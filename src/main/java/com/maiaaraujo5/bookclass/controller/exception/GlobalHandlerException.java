@@ -1,5 +1,6 @@
 package com.maiaaraujo5.bookclass.controller.exception;
 
+import com.maiaaraujo5.bookclass.exception.AppointmentAlreadyExists;
 import com.maiaaraujo5.bookclass.exception.TeacherAlreadyExists;
 import com.maiaaraujo5.bookclass.exception.TeacherNotFound;
 import org.springframework.http.HttpStatus;
@@ -21,5 +22,11 @@ public class GlobalHandlerException extends ResponseEntityExceptionHandler {
     public ResponseEntity<ResponseException> handleTeacherNotFound(TeacherNotFound teacherNotFound) {
         ResponseException responseException = new ResponseException(HttpStatus.NOT_FOUND.name(), teacherNotFound.getMessage());
         return new ResponseEntity<>(responseException, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(AppointmentAlreadyExists.class)
+    public ResponseEntity<ResponseException> handleAppointmentAlreadyExists(AppointmentAlreadyExists appointmentAlreadyExists) {
+        ResponseException responseException = new ResponseException(HttpStatus.CONFLICT.name(), appointmentAlreadyExists.getMessage());
+        return new ResponseEntity<>(responseException, HttpStatus.CONFLICT);
     }
 }
