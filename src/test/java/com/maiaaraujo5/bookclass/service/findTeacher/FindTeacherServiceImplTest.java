@@ -1,5 +1,6 @@
 package com.maiaaraujo5.bookclass.service.findTeacher;
 
+import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherNotFound;
@@ -13,6 +14,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -32,7 +35,11 @@ class FindTeacherServiceImplTest {
 
     @Test
     void should_find_teacher_successfully() {
-        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", new WorkTime(8, 17), LocalDateTime.now());
+
+        List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
+        List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
+
+        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, LocalDateTime.now());
         when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.of(teacher));
 
         Teacher teacher1 = findTeacherService.execute(anyString());

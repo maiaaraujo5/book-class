@@ -10,6 +10,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @ToString
 @Setter
@@ -23,7 +25,8 @@ public class TeacherDocument {
     private String name;
     private String lastname;
     private String email;
-    private WorkTimeDocument workTime;
+
+    private List<WorkTimeDocument> workTime;
     private LocalDateTime createdAt;
 
     public TeacherDocument(Teacher teacher) {
@@ -31,6 +34,10 @@ public class TeacherDocument {
         this.name = teacher.getName();
         this.lastname = teacher.getLastname();
         this.email = teacher.getEmail();
-        this.workTime = new WorkTimeDocument(teacher.getWorkTime().getStartAt(), teacher.getWorkTime().getEndAt());
+        this.workTime = convertWorkTimeList(teacher.getWorkTimeList());
+    }
+
+    private List<WorkTimeDocument> convertWorkTimeList(List<WorkTime> workTimeList) {
+        return workTimeList.stream().map(WorkTimeDocument::new).collect(Collectors.toList());
     }
 }

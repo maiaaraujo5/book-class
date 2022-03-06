@@ -1,5 +1,6 @@
 package com.maiaaraujo5.bookclass.controller.findTeacher;
 
+import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherNotFound;
@@ -14,6 +15,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -34,7 +37,10 @@ class FindTeacherControllerTest {
 
     @Test
     void should_successfully_find_a_teacher_and_response_status_created() throws Exception {
-        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", new WorkTime(8, 17), LocalDateTime.now());
+        List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
+        List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
+
+        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, LocalDateTime.now());
         given(findTeacherService.execute(anyString())).willReturn(teacher);
 
         mockMvc.perform(get("/v1/teacher")

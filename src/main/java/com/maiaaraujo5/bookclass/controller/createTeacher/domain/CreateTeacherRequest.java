@@ -5,6 +5,8 @@ import com.maiaaraujo5.bookclass.controller.shared.WorkTime;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.List;
+
 @Getter
 @AllArgsConstructor
 public class CreateTeacherRequest {
@@ -14,6 +16,6 @@ public class CreateTeacherRequest {
     private final String lastname;
     @JsonProperty
     private final String email;
-    @JsonProperty("work_time")
-    private final WorkTime workTime;
+    @JsonProperty("workTime")
+    private final List<WorkTime> workTimeList;
 }

@@ -1,5 +1,6 @@
 package com.maiaaraujo5.bookclass.controller.createTeacher;
 
+import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherAlreadyExists;
@@ -15,7 +16,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
@@ -35,12 +40,16 @@ class CreateTeacherServiceControllerTest {
 
     @Test
     void should_successfully_create_a_teacher_and_response_status_created() throws Exception {
-        Teacher teacher = new Teacher("123","John", "Doe", "johndoe@johndoe.com", new WorkTime(8, 17), LocalDateTime.now());
+        List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
+        List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
+
+
+        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, LocalDateTime.now());
         given(createTeacherService.execute(any())).willReturn(teacher);
 
         mockMvc.perform(post("/v1/teacher")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john.doe@johndoe.com\",\"work_time\":{\"start_at\":8,\"end_at\":17}}"))
+                .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john.doe@gmail.com\",\"worktime\":[{\"weekday\":\"01\",\"schedules\":[{\"startHour\":12,\"endHour\":19},{\"startHour\":16,\"endHour\":20}]}],\"subject\":{\"name\":\"Inglês\",\"tags\":[\"britânico\",\"avançado\"]}}"))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.id", is("123")))
                 .andExpect(jsonPath("$.name", is("John")))
@@ -53,7 +62,7 @@ class CreateTeacherServiceControllerTest {
         given(createTeacherService.execute(any())).willThrow(new TeacherAlreadyExists("This teacher already exists"));
         mockMvc.perform(post("/v1/teacher")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john.doe@johndoe.com\",\"work_time\":{\"start_at\":8,\"end_at\":17}}"))
+                .content("{\"name\":\"John\",\"lastname\":\"Doe\",\"email\":\"john.doe@gmail.com\",\"worktime\":[{\"weekday\":\"01|monday\",\"schedules\":[{\"startHour\":9,\"endHour\":12},{\"startHour\":16,\"endHour\":20}]}],\"subject\":{\"name\":\"Inglês\",\"tags\":[\"britânico\",\"avançado\"]}}"))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.status", is(HttpStatus.CONFLICT.name())))
                 .andExpect(jsonPath("$.message", is("This teacher already exists")));

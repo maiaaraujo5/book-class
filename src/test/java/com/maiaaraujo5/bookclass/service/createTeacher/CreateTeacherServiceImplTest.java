@@ -1,5 +1,6 @@
 package com.maiaaraujo5.bookclass.service.createTeacher;
 
+import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.exception.TeacherAlreadyExists;
@@ -12,6 +13,8 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.hamcrest.CoreMatchers.*;
@@ -33,7 +36,10 @@ class CreateTeacherServiceImplTest {
 
     @Test
     void should_create_teacher_successfully() {
-        Teacher input = new Teacher("", "", "", "", new WorkTime(8, 17), LocalDateTime.now());
+        List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
+        List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
+
+        Teacher input = new Teacher("", "", "", "", workTimeList, LocalDateTime.now());
         when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.empty());
 
         Teacher teacher = createTeacher.execute(input);
@@ -44,11 +50,15 @@ class CreateTeacherServiceImplTest {
 
     @Test
     void should_trow_exception_when_user_already_exist_in_repository() {
+        List<Schedule> scheduleList = Collections.singletonList(new Schedule(12, 19));
+        List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
+
+
         TeacherAlreadyExists thrown = assertThrows(
                 TeacherAlreadyExists.class,
                 () -> {
                     when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.of(new Teacher()));
-                    Teacher input = new Teacher("", "", "", "", new WorkTime(8, 17), LocalDateTime.now());
+                    Teacher input = new Teacher("", "", "", "", workTimeList, LocalDateTime.now());
                     createTeacher.execute(input);
                 }
         );

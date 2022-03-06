@@ -1,5 +1,6 @@
 package com.maiaaraujo5.bookclass.repository.teacher;
 
+import com.maiaaraujo5.bookclass.domain.teacher.Schedule;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.domain.teacher.WorkTime;
 import com.maiaaraujo5.bookclass.repository.teacher.model.TeacherDocument;
@@ -8,7 +9,10 @@ import com.maiaaraujo5.bookclass.repository.teacher.provider.TeacherMongoReposit
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Component
 public class TeacherRepositoryImpl implements TeacherRepository {
@@ -34,16 +38,29 @@ public class TeacherRepositoryImpl implements TeacherRepository {
             return Optional.empty();
         }
 
-        WorkTime workTime = new WorkTime(teacherDocument.get().getWorkTime().getStartAt(),
-                teacherDocument.get().getWorkTime().getEndAt());
-
         Teacher teacher = new Teacher(teacherDocument.get().getUserId(),
                 teacherDocument.get().getName(),
                 teacherDocument.get().getLastname(),
                 teacherDocument.get().getEmail(),
-                workTime,
+                convertWorkTimeDomain(teacherDocument.get().getWorkTime()),
                 teacherDocument.get().getCreatedAt());
 
         return Optional.of(teacher);
+    }
+
+    private List<WorkTime> convertWorkTimeDomain(List<WorkTimeDocument> workTimeDocumentList) {
+        List<WorkTime> list = new ArrayList<>();
+
+        workTimeDocumentList.forEach(workTimeDocument -> {
+            List<Schedule> scheduleList = workTimeDocument.getScheduleDocumentList()
+                    .stream()
+                    .map(scheduleDocument -> new Schedule(scheduleDocument.getStartHour(), scheduleDocument.getEndHour()))
+                    .collect(Collectors.toList());
+
+            WorkTime workTime = new WorkTime(workTimeDocument.getWeekday(), scheduleList);
+            list.add(workTime);
+        });
+
+        return list;
     }
 }
