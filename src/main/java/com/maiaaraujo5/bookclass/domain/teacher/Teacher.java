@@ -28,4 +28,10 @@ public class Teacher {
         this.workTimeList = workTimeList;
         this.subjectList = subjectList;
     }
+
+    public Teacher(String name, String lastname, String email) {
+        this.name = name;
+        this.lastname = lastname;
+        this.email = email;
+    }
 }

@@ -1,5 +1,6 @@
 package com.maiaaraujo5.bookclass.controller.createTeacher.domain;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.maiaaraujo5.bookclass.controller.shared.Subject;
 import com.maiaaraujo5.bookclass.controller.shared.WorkTime;

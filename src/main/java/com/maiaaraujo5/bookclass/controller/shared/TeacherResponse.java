@@ -1,5 +1,6 @@
 package com.maiaaraujo5.bookclass.controller.shared;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Getter
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class TeacherResponse {
     @JsonProperty
     private final String id;
