@@ -1,4 +1,4 @@
-package com.maiaaraujo5.bookclass.controller.createTeacher.domain;
+package com.maiaaraujo5.bookclass.controller.updateTeacher.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.maiaaraujo5.bookclass.controller.shared.teacher.Subject;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class CreateTeacherRequest {
+public class UpdateTeacherRequest {
     @JsonProperty
     private final String name;
     @JsonProperty

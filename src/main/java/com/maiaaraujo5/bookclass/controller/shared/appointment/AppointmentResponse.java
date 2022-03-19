@@ -1,4 +1,4 @@
-package com.maiaaraujo5.bookclass.controller.shared;
+package com.maiaaraujo5.bookclass.controller.shared.appointment;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;

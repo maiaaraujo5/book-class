@@ -34,12 +34,22 @@ public class TeacherRepositoryImpl implements TeacherRepository {
     @Override
     public Optional<Teacher> FindByEmail(String email) {
         Optional<TeacherDocument> teacherDocument = Optional.ofNullable(this.teacherMongoRepository.findTeacherByEmail(email));
+        return convertDocumentToDomain(teacherDocument);
+    }
 
+    @Override
+    public Optional<Teacher> FindById(String id) {
+        Optional<TeacherDocument> teacherDocument = Optional.ofNullable(this.teacherMongoRepository.findTeacherDocumentByUserId(id));
+        return this.convertDocumentToDomain(teacherDocument);
+    }
+
+    private Optional<Teacher> convertDocumentToDomain(Optional<TeacherDocument> teacherDocument) {
         if (teacherDocument.isEmpty()) {
             return Optional.empty();
         }
 
-        Teacher teacher = new Teacher(teacherDocument.get().getUserId(),
+        Teacher teacher = new Teacher(teacherDocument.get().getId(),
+                teacherDocument.get().getUserId(),
                 teacherDocument.get().getName(),
                 teacherDocument.get().getLastname(),
                 teacherDocument.get().getEmail(),
@@ -47,7 +57,8 @@ public class TeacherRepositoryImpl implements TeacherRepository {
                 teacherDocument.get().getSubjectDocumentList().stream()
                         .map(subject -> new Subject(subject.getName(), subject.getTags()))
                         .collect(Collectors.toList()),
-                teacherDocument.get().getCreatedAt());
+                teacherDocument.get().getCreatedAt(),
+                teacherDocument.get().getUpdatedAt());
 
         return Optional.of(teacher);
     }

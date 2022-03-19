@@ -29,4 +29,10 @@ public class GlobalHandlerException extends ResponseEntityExceptionHandler {
         ResponseException responseException = new ResponseException(HttpStatus.CONFLICT.name(), appointmentAlreadyExists.getMessage());
         return new ResponseEntity<>(responseException, HttpStatus.CONFLICT);
     }
+
+    @ExceptionHandler(InvalidTokenException.class)
+    public ResponseEntity<ResponseException> handleInvalidTokenException(InvalidTokenException invalidTokenException) {
+        ResponseException responseException = new ResponseException(HttpStatus.FORBIDDEN.name(), invalidTokenException.getMessage());
+        return new ResponseEntity<>(responseException, HttpStatus.FORBIDDEN);
+    }
 }

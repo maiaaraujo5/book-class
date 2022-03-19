@@ -42,7 +42,7 @@ class FindTeacherControllerTest {
         List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
         List<Subject> subjectList = Collections.singletonList(new Subject("English", Collections.singletonList("tag")));
 
-        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, subjectList,LocalDateTime.now());
+        Teacher teacher = new Teacher("123", "123", "John", "Doe", "johndoe@johndoe.com", workTimeList, subjectList,LocalDateTime.now(), LocalDateTime.now());
         given(findTeacherService.execute(anyString())).willReturn(teacher);
 
         mockMvc.perform(get("/v1/teacher")

@@ -1,7 +1,7 @@
 package com.maiaaraujo5.bookclass.controller.createAppointment;
 
 import com.maiaaraujo5.bookclass.controller.createAppointment.domain.CreateAppointmentRequest;
-import com.maiaaraujo5.bookclass.controller.shared.AppointmentResponse;
+import com.maiaaraujo5.bookclass.controller.shared.appointment.AppointmentResponse;
 import com.maiaaraujo5.bookclass.domain.appointment.Appointment;
 import com.maiaaraujo5.bookclass.service.createAppointment.CreateAppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;

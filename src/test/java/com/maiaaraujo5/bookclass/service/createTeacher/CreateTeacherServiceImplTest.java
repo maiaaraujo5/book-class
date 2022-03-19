@@ -21,7 +21,8 @@ import java.util.Optional;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -40,7 +41,7 @@ class CreateTeacherServiceImplTest {
         List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
         List<Subject> subjectList = Collections.singletonList(new Subject("English", Collections.singletonList("tag")));
 
-        Teacher input = new Teacher("", "", "", "", workTimeList, subjectList, LocalDateTime.now());
+        Teacher input = new Teacher("", "", "", "", "", workTimeList, subjectList, LocalDateTime.now(), LocalDateTime.now());
         when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.empty());
 
         Teacher teacher = createTeacher.execute(input);
@@ -59,7 +60,7 @@ class CreateTeacherServiceImplTest {
                 TeacherAlreadyExists.class,
                 () -> {
                     when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.of(new Teacher()));
-                    Teacher input = new Teacher("", "", "", "", workTimeList, subjectList,LocalDateTime.now());
+                    Teacher input = new Teacher("", "", "", "", "", workTimeList, subjectList,LocalDateTime.now(), LocalDateTime.now());
                     createTeacher.execute(input);
                 }
         );

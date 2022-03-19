@@ -1,6 +1,6 @@
 package com.maiaaraujo5.bookclass.controller.findTeacher;
 
-import com.maiaaraujo5.bookclass.controller.shared.TeacherResponse;
+import com.maiaaraujo5.bookclass.controller.shared.teacher.TeacherResponse;
 import com.maiaaraujo5.bookclass.domain.teacher.Teacher;
 import com.maiaaraujo5.bookclass.service.findTeacher.FindTeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController

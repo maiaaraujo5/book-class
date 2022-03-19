@@ -9,4 +9,6 @@ public interface TeacherRepository {
     void Save(Teacher teacher);
 
     Optional<Teacher> FindByEmail(String email);
+
+    Optional<Teacher> FindById(String id);
 }

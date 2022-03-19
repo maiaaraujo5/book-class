@@ -41,7 +41,7 @@ class FindTeacherServiceImplTest {
         List<WorkTime> workTimeList = Collections.singletonList(new WorkTime("0", scheduleList));
         List<Subject> subjectList = Collections.singletonList(new Subject("English", Collections.singletonList("tag")));
 
-        Teacher teacher = new Teacher("123", "John", "Doe", "johndoe@johndoe.com", workTimeList, subjectList, LocalDateTime.now());
+        Teacher teacher = new Teacher("123", "123", "John", "Doe", "johndoe@johndoe.com", workTimeList, subjectList, LocalDateTime.now(), LocalDateTime.now());
         when(teacherRepository.FindByEmail(anyString())).thenReturn(Optional.of(teacher));
 
         Teacher teacher1 = findTeacherService.execute(anyString());

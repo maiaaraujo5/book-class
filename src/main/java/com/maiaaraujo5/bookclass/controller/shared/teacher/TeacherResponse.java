@@ -1,4 +1,4 @@
-package com.maiaaraujo5.bookclass.controller.shared;
+package com.maiaaraujo5.bookclass.controller.shared.teacher;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,7 +26,7 @@ public class TeacherResponse {
     private final List<Subject> subjectList;
 
     public TeacherResponse(Teacher teacher) {
-        this.id = teacher.getId();
+        this.id = teacher.getUserId();
         this.name = teacher.getName();
         this.lastname = teacher.getLastname();
         this.email = teacher.getEmail();
@@ -40,7 +40,7 @@ public class TeacherResponse {
         List<WorkTime> list = new ArrayList<>();
 
         workTimeList.forEach(workTime -> {
-            List<com.maiaaraujo5.bookclass.controller.shared.Schedule> scheduleList = workTime.getScheduleList().stream().map(schedule ->
+            List<Schedule> scheduleList = workTime.getScheduleList().stream().map(schedule ->
                     new Schedule(schedule.getStartHour(), schedule.getEndHour())).collect(Collectors.toList());
 
             WorkTime wk = new WorkTime(workTime.getWeekday(), scheduleList);

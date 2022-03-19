@@ -31,9 +31,11 @@ public class TeacherDocument {
     @Field("subjects")
     private List<SubjectDocument> subjectDocumentList;
     private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public TeacherDocument(Teacher teacher) {
-        this.userId = teacher.getId();
+        this.id = teacher.getId();
+        this.userId = teacher.getUserId();
         this.name = teacher.getName();
         this.lastname = teacher.getLastname();
         this.email = teacher.getEmail();
@@ -41,6 +43,8 @@ public class TeacherDocument {
         this.subjectDocumentList = teacher.getSubjectList().stream()
                 .map(subject -> new SubjectDocument(subject.getName(), subject.getTags()))
                 .collect(Collectors.toList());
+        this.createdAt = teacher.getCreatedAt();
+        this.updatedAt = teacher.getUpdatedAt();
     }
 
     private List<WorkTimeDocument> convertWorkTimeList(List<WorkTime> workTimeList) {
