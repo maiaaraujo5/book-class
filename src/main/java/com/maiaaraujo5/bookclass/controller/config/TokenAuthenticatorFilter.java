@@ -1,7 +1,6 @@
 package com.maiaaraujo5.bookclass.controller.config;
 
 import com.maiaaraujo5.bookclass.controller.exception.InvalidTokenException;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import javax.servlet.FilterChain;
@@ -16,8 +15,11 @@ public class TokenAuthenticatorFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, FilterChain filterChain) throws ServletException, IOException {
         String token = httpServletRequest.getHeader("Authorization");
         if (!isTokenValid(token)) {
-            throw new InvalidTokenException("The provided token is invalid");
+            filterChain.doFilter(httpServletRequest, httpServletResponse);
+            return;
         }
+
+        System.out.println();
     }
 
     private boolean isTokenValid(String token) {
