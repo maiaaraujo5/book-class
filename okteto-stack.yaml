@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  bookclass:
+    image: aulera/bookclass:v1.0.0
+    annotations:
+      dev.okteto.com/auto-ingress: "true"
+    ports:
+      - "8080:8080"
